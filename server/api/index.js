@@ -31,7 +31,10 @@ app.use(cors(corsOptions));
 
 const PORT = process.env.PORT || 4000;
 
-// Recommendation API Route (candidate recommendations)
+app.get("/", (req, res) => {
+  res.send("Welcome to Job Internova server");
+});
+/* // Recommendation API Route (candidate recommendations)
 app.post(
   "/api/v1/recommendations/candidate-recommendations",
   async (req, res) => {
@@ -82,7 +85,7 @@ app.post(
       });
     }
   }
-);
+); */
 
 // Other API routes
 app.use("/api/v1/user", userRoute); // Example: "http://localhost:4000/api/v1/user/register"
