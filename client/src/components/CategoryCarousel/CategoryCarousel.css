@@ -1,0 +1,46 @@
+/* Button Grid */
+.button-grid-contain-jobs{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  
+  .button-grid-jobs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    width: 90%;
+    max-width: 500px;
+  }
+  
+  .job-button-jobs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    color: black;
+    border-radius: 1.5rem;
+    padding: 1rem;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    border: 2px solid transparent;
+  }
+  
+  .job-button-jobs:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .icon-jobs {
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
+  }
+  
+  .Explore-icon-jobs {
+    font-size: 1.5rem;
+  }
+  
+  .col-span-2-jobs {
+    grid-column: span 2;
+  }
+  

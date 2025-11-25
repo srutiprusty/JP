@@ -1,0 +1,177 @@
+
+.jobs-container-jobs {
+    width: 100%;
+   
+  }
+  
+  /* Full Width Image */
+  .full-width-image-jobs .full-image-jobs {
+    width: 100%;
+    height: auto;
+    margin-top:2%;
+    object-fit: cover;
+  }
+  
+  .centered-image-jobs{
+        display: flex;
+        justify-content: center;
+  }
+  /* Centered Image */
+  .centered-image-jobs .explore-image-jobs {
+    width: 70% ;
+    height: auto ;
+    margin: 0 auto ;
+  }
+  
+  /* Button Grid */
+  .button-grid-contain-jobs{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  
+  .button-grid-jobs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    width: 90%;
+    max-width: 500px;
+  }
+  
+  .job-button-jobs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    color: black;
+    border-radius: 1.5rem;
+    padding: 1rem;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    border: 2px solid transparent;
+  }
+  
+  .job-button-jobs:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .icon-jobs {
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
+  }
+  
+  .Explore-icon-jobs {
+    font-size: 1.5rem;
+  }
+  
+  .col-span-2-jobs {
+    grid-column: span 2;
+  }
+  
+  /* Featured Section */
+  .featured-jobs-jobs {
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    margin-top: 2rem;
+  }
+  
+  .featured-title-jobs {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #4a4a4a;
+  }
+  
+  .explore-featured-button-jobs {
+    position: absolute;
+    right: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 5rem;
+    height: 2.6rem;
+    background-color: white;
+    color: rgb(0, 0, 0);
+    border-radius: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1),
+      0px 1px 3px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .explore-featured-button-jobs:hover {
+    background-color: #e0e0e0;
+  }
+  
+  /* Job Cards Container */
+  .jobcards-container-jobs {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* This will adjust based on screen width */
+    gap: 1.5rem; /* Increased gap */
+    justify-content: center;
+    margin-top: 3rem;
+    padding: 0 1rem; /* Add padding to the left and right for spacing */
+  }
+  
+  /* Individual Job Card */
+  .jobcard {
+    max-width: 350px;
+    margin: 0 auto; /* Center the cards */
+  }
+  .intern .footer-container,.intern .footer-bottom{
+    background-color: #FFC107;
+    color: #242424;
+  }
+  .intern .footer-bottom p{
+    color: #242424;
+  }
+  .intern .newsletter-input button {
+background: linear-gradient(1.36deg, #242424 -22.29%, #FFC107 98.84%), #000000;
+border-radius: 17px;
+  }
+
+  
+  
+  .intern .social-media-section  {
+    
+background: linear-gradient(11.92deg, #000000 -8.13%, #FFC107 77.89%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-fill-color: transparent;
+
+  }
+  .intern .social-icons a ,.intern .links-section ul li a{
+    color: #242424;
+  }
+  
+  /* Responsive Adjustments */
+  
+  /* Mobile screens */
+  @media (max-width: 640px) {
+    .jobcards-container-jobs {
+      gap: 0.75rem; /* Reduced gap for small screens */
+      margin: 1rem 0.5rem; /* Smaller left-right margin */
+    }
+  }
+  
+  /* Tablets and above */
+  @media (min-width: 768px) {
+    .jobcards-container-jobs {
+      gap: 1rem; /* Slightly increased gap */
+      margin: 2rem 1.5rem; /* Wider margins for better spacing */
+    }
+  }
+  
+  /* Large screens (desktop) - 4 cards in a row */
+  @media (min-width: 1024px) {
+    .jobcards-container-jobs {
+      grid-template-columns: repeat(4, 1fr); /* 4 cards in a row */
+      gap: 1.5rem; /* More spacing between cards */
+      margin: 2rem 2rem; /* Balanced left-right margin */
+    }
+  }
+  

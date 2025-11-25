@@ -1,0 +1,52 @@
+
+  #about {
+    z-index: 1;
+    background: #fcfcfc;
+   /*  background: linear-gradient(145deg, #fdfdfd 0%, #e6e6e6 100%); */
+   /*  margin-top: 100px; */ /* Adjust the margin to space it from the Landing section */
+    padding: 60px 0px; 
+    position: relative; 
+}
+
+.about-head {
+    color: #333; 
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-top:2%
+}
+
+.yellow-gradient1 {
+    position: absolute;
+    top: -10%; 
+    left: -15%;
+    filter: blur(90px); 
+    border-radius: 100px;
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0) 5.56%, #FFEB3B 83.33%);
+    width: 500px;
+    height: 400px;
+    opacity: 0.6; 
+    z-index: 1;
+}
+
+.violet-gradient1 {
+    position: absolute;
+    top: 25%; 
+    left: 60%;
+    filter: blur(90px); 
+    border-radius: 100px;
+    background: linear-gradient(180deg, rgba(106, 90, 205, 0.42) 0%, #29153D 77.78%);
+    width: 500px;
+    height: 400px;
+    opacity: 0.6;
+    z-index: 1; 
+}
+
+.about p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555; 
+    font-weight: bold;
+    margin: 20px 50px;
+    z-index: 2;
+}
