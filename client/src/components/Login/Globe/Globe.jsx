@@ -13,7 +13,7 @@ const Globe = () => {
     const globe = createGlobe(canvasRef.current, {
       devicePixelRatio: window.devicePixelRatio,
       width: canvasRef.current.offsetWidth, // Canvas width based on parent size
-      height: canvasRef.current.offsetHeight / 1.5, // Canvas height based on parent size
+      height: canvasRef.current.offsetHeight, // Canvas height based on parent size
       phi: Math.PI / 2, // Initial angle
       theta: 0.3, // Tilt angle
       dark: 1, // Darkness level

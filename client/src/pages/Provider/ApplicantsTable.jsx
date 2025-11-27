@@ -113,9 +113,7 @@ const ApplicantsTable = () => {
                   <TableCell>
                     <div className="flex items-center text-sm text-gray-600">
                       <Calendar className="h-4 w-4 mr-2" />
-                      {new Date(
-                        item?.applicant?.createdAt
-                      ).toLocaleDateString()}
+                      {new Date(item?.createdAt).toLocaleDateString()}
                     </div>
                   </TableCell>
                   <TableCell className="text-right">
