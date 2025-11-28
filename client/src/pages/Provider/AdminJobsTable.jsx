@@ -67,9 +67,12 @@ const AdminJobsTable = () => {
         <TableCaption>A list of your recent posted jobs</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead>Company Name</TableHead>
-            <TableHead>Role</TableHead>
-            <TableHead>Date</TableHead>
+            <TableHead>Job Title</TableHead>
+            <TableHead>Location</TableHead>
+            <TableHead>Job Type</TableHead>
+            <TableHead>Salary</TableHead>
+            <TableHead>Experience</TableHead>
+            <TableHead>Posted Date</TableHead>
             <TableHead className="text-right">Action</TableHead>
           </TableRow>
         </TableHeader>
@@ -77,7 +80,7 @@ const AdminJobsTable = () => {
           {/* Handle case where no jobs are found */}
           {filteredJobs.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={4} className="text-center">
+              <TableCell colSpan={7} className="text-center">
                 No jobs found
               </TableCell>
             </TableRow>
@@ -85,8 +88,15 @@ const AdminJobsTable = () => {
             // Map through filtered jobs and display them
             filteredJobs.map((job) => (
               <TableRow key={job._id}>
-                <TableCell>{job.company?.name || "N/A"}</TableCell>
                 <TableCell>{job?.title || "N/A"}</TableCell>
+                <TableCell>{job?.location || "N/A"}</TableCell>
+                <TableCell>{job?.jobType || "N/A"}</TableCell>
+                <TableCell>{job?.salary ? `₹${job.salary}` : "N/A"}</TableCell>
+                <TableCell>
+                  {job?.experienceLevel
+                    ? `${job.experienceLevel} years`
+                    : "N/A"}
+                </TableCell>
                 <TableCell>{job?.createdAt?.split("T")[0] || "N/A"}</TableCell>
                 <TableCell className="text-right">
                   <Popover>
@@ -95,7 +105,7 @@ const AdminJobsTable = () => {
                     </PopoverTrigger>
                     <PopoverContent>
                       <div
-                        onClick={() => navigate(`/admin/companies/${job._id}`)}
+                        onClick={() => navigate(`/admin/jobs/${job._id}/edit`)}
                         className="flex items-center gap-2 cursor-pointer"
                       >
                         <Edit2 className="w-4" />
@@ -105,10 +115,10 @@ const AdminJobsTable = () => {
                         onClick={() =>
                           navigate(`/admin/jobs/${job._id}/applicants`)
                         }
-                        className="flex items-center gap-2 cursor-pointer mt-2"
+                        className="flex items-center gap-2 cursor-pointer"
                       >
                         <Eye className="w-4" />
-                        <span>Applicants</span>
+                        <span>View Applicants</span>
                       </div>
                     </PopoverContent>
                   </Popover>

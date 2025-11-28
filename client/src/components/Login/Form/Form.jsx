@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { toast } from "sonner";
 import { setLoading, setUser } from "../../../redux/authSlice";
 import "./Form.css";
-import { USER_API_END_POINT } from "@/utils/constant";
+import { USER_API_END_POINT, COMPANY_API_END_POINT } from "@/utils/constant";
 
 const Form = ({ role }) => {
   const [email, setEmail] = useState("");
@@ -48,7 +48,21 @@ const Form = ({ role }) => {
       if (data.user.role === "student") {
         navigate("/jobseeker");
       } else if (data.user.role === "recruiter") {
-        navigate("/admin/companies");
+        // Check if user has a company
+        try {
+          const companyRes = await fetch(`${COMPANY_API_END_POINT}/get`, {
+            method: "GET",
+            credentials: "include",
+          });
+          const companyData = await companyRes.json();
+          if (companyData.success && companyData.companies.length > 0) {
+            navigate(`/admin/companies/${companyData.companies[0]._id}`);
+          } else {
+            navigate("/admin/companies/create");
+          }
+        } catch (error) {
+          navigate("/admin/companies/create");
+        }
       } else {
         navigate("/mentorProfile");
       }

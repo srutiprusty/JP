@@ -11,9 +11,11 @@ import { USER_API_END_POINT } from "@/utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { setUser } from "@/redux/authSlice";
+import useGetAllCompanies from "@/hooks/useGetAllCompanies";
 
 const JobHeader = () => {
   const { user } = useSelector((store) => store.auth);
+  const { companies } = useSelector((store) => store.company);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -63,7 +65,15 @@ const JobHeader = () => {
         {user && user.role === "recruiter" ? (
           <>
             <li>
-              <NavLink to="/admin/companies">Companies</NavLink>
+              <NavLink
+                to={
+                  companies.length > 0
+                    ? `/admin/companies/${companies[0]._id}`
+                    : "/admin/companies"
+                }
+              >
+                Company
+              </NavLink>
             </li>
             <li>
               <NavLink to="/admin/jobs">Jobs</NavLink>

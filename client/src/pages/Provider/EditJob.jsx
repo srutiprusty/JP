@@ -6,14 +6,12 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { JOB_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import JobHeader from "@/components/JobHeader/JobHeader";
 import useGetAllCompanies from "@/hooks/useGetAllCompanies";
 
-const companyArray = [];
-
-const PostJob = () => {
+const EditJob = () => {
   const [input, setInput] = useState({
     title: "",
     description: "",
@@ -27,17 +25,51 @@ const PostJob = () => {
     companyId: "",
   });
   const [loading, setLoading] = useState(false);
+  const [jobLoading, setJobLoading] = useState(true);
   const navigate = useNavigate();
+  const { id } = useParams();
 
   useGetAllCompanies();
   const { companies } = useSelector((store) => store.company);
 
-  // Automatically set companyId if user has a company
+  // Fetch job data
   useEffect(() => {
-    if (companies.length > 0) {
+    const fetchJob = async () => {
+      try {
+        const res = await axios.get(`${JOB_API_END_POINT}/get/${id}`, {
+          withCredentials: true,
+        });
+        if (res.data.success) {
+          const job = res.data.job;
+          setInput({
+            title: job.title || "",
+            description: job.description || "",
+            requirements: job.requirements ? job.requirements.join(",") : "",
+            salary: job.salary || "",
+            location: job.location || "",
+            jobType: job.jobType || "",
+            sector: job.sector || "",
+            experience: job.experienceLevel || "",
+            position: job.position || 0,
+            companyId: job.company ? job.company._id : "",
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching job:", error);
+        toast.error("Failed to load job data");
+      } finally {
+        setJobLoading(false);
+      }
+    };
+    fetchJob();
+  }, [id]);
+
+  // Automatically set companyId if user has a company and no company is set
+  useEffect(() => {
+    if (companies.length > 0 && !input.companyId) {
       setInput((prev) => ({ ...prev, companyId: companies[0]._id }));
     }
-  }, [companies]);
+  }, [companies, input.companyId]);
 
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -61,10 +93,10 @@ const PostJob = () => {
       toast.error("Please fill all required fields");
       return;
     }
-    console.log("Submitting job data:", input);
+    console.log("Updating job data:", input);
     try {
       setLoading(true);
-      const res = await axios.post(`${JOB_API_END_POINT}/post`, input, {
+      const res = await axios.put(`${JOB_API_END_POINT}/update/${id}`, input, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -77,11 +109,22 @@ const PostJob = () => {
       }
     } catch (error) {
       console.error("Error details:", error);
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Failed to update job");
     } finally {
       setLoading(false);
     }
   };
+
+  if (jobLoading) {
+    return (
+      <div>
+        <JobHeader />
+        <div className="flex items-center justify-center w-screen my-5">
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Loading job data...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -173,7 +216,7 @@ const PostJob = () => {
               />
             </div>
             <div>
-              <Label>No of Postion</Label>
+              <Label>No of Position</Label>
               <Input
                 type="number"
                 name="position"
@@ -190,12 +233,12 @@ const PostJob = () => {
             </Button>
           ) : (
             <Button type="submit" className="w-full my-4">
-              Post New Job
+              Update Job
             </Button>
           )}
           {companies.length === 0 && (
             <p className="text-xs text-red-600 font-bold text-center my-3">
-              *Please create a company first, before posting jobs
+              *Please create a company first, before updating jobs
             </p>
           )}
         </form>
@@ -204,4 +247,4 @@ const PostJob = () => {
   );
 };
 
-export default PostJob;
+export default EditJob;

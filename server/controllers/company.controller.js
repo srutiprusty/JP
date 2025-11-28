@@ -1,8 +1,10 @@
 import { Company } from "./../models/company.model.js";
-
+import cloudinary from "cloudinary";
+import getDataUri from "../utils/dataUri.js";
 export const registerCompany = async (req, res) => {
   try {
-    const { companyName } = req.body;
+    const { companyName, description, website, location, logo, employeeCount } =
+      req.body;
     if (!companyName) {
       return res.status(400).json({
         message: "Company name is required.",
@@ -16,8 +18,21 @@ export const registerCompany = async (req, res) => {
         success: false,
       });
     }
+    // Check if user already has a company
+    const existingCompany = await Company.findOne({ userId: req.id });
+    if (existingCompany) {
+      return res.status(400).json({
+        message: "You can only create one company.",
+        success: false,
+      });
+    }
     company = await Company.create({
       name: companyName,
+      description,
+      website,
+      location,
+      logo,
+      employeeCount,
       userId: req.id,
     });
     return res.status(201).json({
@@ -70,23 +85,28 @@ export const getCompanyById = async (req, res) => {
 
 export const updateCompany = async (req, res) => {
   try {
-    const { name, description, website, location } = req.body;
+    const { name, description, website, location, employeeCount } = req.body;
     const file = req.file;
     //cloudinary
-
-    const updateData = { name, description, website, location };
+    const updateData = { name, description, website, location, employeeCount };
+    if (file) {
+      const fileUri = getDataUri(file);
+      const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+      updateData.logo = cloudResponse.secure_url;
+    }
     const company = await Company.findByIdAndUpdate(req.params.id, updateData, {
       new: true,
     });
 
     if (!company) {
-      res.status(404).json({
+      return res.status(404).json({
         message: "Company not found",
         success: false,
       });
     }
     return res.status(200).json({
       message: "Company Details updated.",
+      company,
       success: true,
     });
   } catch (error) {

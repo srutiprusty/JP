@@ -10,7 +10,7 @@ export const postJob = async (req, res) => {
       salary,
       location,
       jobType,
-      /*  sector, */
+      sector,
       experience,
       position,
       companyId,
@@ -24,10 +24,9 @@ export const postJob = async (req, res) => {
       !salary ||
       !location ||
       !jobType ||
-      /*  !sector || */
+      !sector ||
       !experience ||
-      !position ||
-      !companyId
+      !position
     ) {
       return res.status(400).json({
         message: "Something is missing.",
@@ -41,7 +40,7 @@ export const postJob = async (req, res) => {
       salary: Number(salary),
       location,
       jobType,
-      /*   sector, */
+      sector,
       experienceLevel: experience,
       position,
       company: companyId,
@@ -130,5 +129,86 @@ export const getAdminJobs = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+  }
+};
+
+//for recruiter
+export const updateJob = async (req, res) => {
+  try {
+    const {
+      title,
+      description,
+      requirements,
+      salary,
+      location,
+      jobType,
+      sector,
+      experience,
+      position,
+      companyId,
+    } = req.body;
+    const jobId = req.params.id;
+    const userId = req.id;
+
+    if (
+      !title ||
+      !description ||
+      !requirements ||
+      !salary ||
+      !location ||
+      !jobType ||
+      !sector ||
+      !experience ||
+      !position
+    ) {
+      return res.status(400).json({
+        message: "Something is missing.",
+        success: false,
+      });
+    }
+
+    const job = await Job.findById(jobId);
+    if (!job) {
+      return res.status(404).json({
+        message: "Job not found.",
+        success: false,
+      });
+    }
+
+    if (job.created_by.toString() !== userId) {
+      return res.status(403).json({
+        message: "You are not authorized to update this job.",
+        success: false,
+      });
+    }
+
+    const updatedJob = await Job.findByIdAndUpdate(
+      jobId,
+      {
+        title,
+        description,
+        requirements: requirements.split(","),
+        salary: Number(salary),
+        location,
+        jobType,
+        sector,
+        experienceLevel: experience,
+        position,
+        company: companyId,
+      },
+      { new: true }
+    );
+
+    return res.status(200).json({
+      message: "Job updated successfully.",
+      job: updatedJob,
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Server error.",
+      success: false,
+    });
   }
 };

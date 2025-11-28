@@ -1,10 +1,9 @@
-import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./Layout";
 import Home from "./components/Home/Home";
 import About from "./components/About/About";
 import Faq from "./components/Faq/Faq";
 import Login from "./components/Login/Login";
+import EditJob from "./pages/Provider/EditJob";
 import EmpLog from "./pages/Emp-login/EmpLog";
 import StdLog from "./pages/Std-Login/StdLog";
 import Landing from "./components/Landing/Landing";
@@ -20,8 +19,10 @@ import JobDescription from "./components/JobDescription";
 import Job from "./components/job/Job";
 import Companies from "./pages/Provider/Companies";
 import CompanyCreate from "./pages/Provider/CompanyCreate";
-/* import CompanySetup from "./pages/Provider/CompanySetup";
- */ import PostJob from "./pages/Provider/PostJob";
+import EditCompany from "./pages/Provider/EditCompany";
+import CompanyPage from "./pages/Provider/CompanyPage";
+/* import CompanySetup from "./pages/Provider/CompanySetup";*/
+import PostJob from "./pages/Provider/PostJob";
 import Applicants from "./pages/Provider/Applicants";
 import AdminJobs from "./pages/Provider/AdminJobs";
 import Browse from "./components/Browse";
@@ -82,14 +83,22 @@ function App() {
             </ProtectedRoute>
           }
         />
-        {/*    <Route
+        <Route
           path="/admin/companies/:id"
           element={
             <ProtectedRoute>
-              <CompanySetup />
+              <CompanyPage />
             </ProtectedRoute>
           }
-        /> */}
+        />
+        <Route
+          path="/admin/companies/:id/edit"
+          element={
+            <ProtectedRoute>
+              <EditCompany />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/admin/jobs"
           element={
@@ -103,6 +112,14 @@ function App() {
           element={
             <ProtectedRoute>
               <PostJob />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/jobs/:id/edit"
+          element={
+            <ProtectedRoute>
+              <EditJob />
             </ProtectedRoute>
           }
         />
