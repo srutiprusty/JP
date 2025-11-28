@@ -2,11 +2,11 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
-import connectDB from "./utils/db.js";
-import userRoute from "./routes/user.route.js";
-import companyRoute from "./routes/company.route.js";
-import jobRoute from "./routes/job.route.js";
-import applicationRoute from "./routes/application.route.js";
+import connectDB from "../utils/db.js";
+import userRoute from "./user.route.js";
+import companyRoute from "./company.route.js";
+import jobRoute from "./job.route.js";
+import applicationRoute from "./application.route.js";
 import axios from "axios";
 
 dotenv.config();
