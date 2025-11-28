@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Job from "./job/Job";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchedQuery } from "@/redux/jobSlice";
@@ -8,8 +8,27 @@ import useGetAllJobs from "@/hooks/useGetAllJobs";
 
 const Browse = () => {
   useGetAllJobs();
-  const { allJobs } = useSelector((store) => store.job);
+  const { allJobs, searchedQuery } = useSelector((store) => store.job);
   const dispatch = useDispatch();
+  const [filterJobs, setFilterJobs] = useState(allJobs);
+
+  useEffect(() => {
+    if (searchedQuery) {
+      const filteredJobs = allJobs.filter((job) => {
+        return (
+          job?.title?.toLowerCase().includes(searchedQuery.toLowerCase()) ||
+          job?.description
+            ?.toLowerCase()
+            .includes(searchedQuery.toLowerCase()) ||
+          job?.location?.toLowerCase().includes(searchedQuery.toLowerCase())
+        );
+      });
+      setFilterJobs(filteredJobs);
+    } else {
+      setFilterJobs(allJobs);
+    }
+  }, [allJobs, searchedQuery]);
+
   useEffect(() => {
     return () => {
       dispatch(setSearchedQuery(""));
@@ -19,10 +38,10 @@ const Browse = () => {
     <div>
       <div className="max-w-7xl mx-auto my-10">
         <h1 className="font-bold text-xl my-10">
-          Search Results ({allJobs.length})
+          Search Results ({filterJobs.length})
         </h1>
         <div className="grid grid-cols-3 gap-4">
-          {allJobs.map((job) => {
+          {filterJobs.map((job) => {
             return <Job key={job._id} job={job} />;
           })}
         </div>
