@@ -84,9 +84,7 @@ const JobHeader = () => {
             <li>
               <NavLink to="/jobpg">Jobs</NavLink>
             </li>
-            <li>
-              <NavLink to="/internships">Internships</NavLink>
-            </li>
+
             <li>
               <NavLink to="/mentorship">Mentorship</NavLink>
             </li>
