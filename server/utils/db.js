@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+/* import mongoose from "mongoose";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -13,8 +13,8 @@ const connectDB = async () => {
   }
 };
 
-export default connectDB;
-/* // utils/db.js
+export default connectDB; */
+// utils/db.js
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
@@ -29,10 +29,9 @@ let cached =
   global._mongooseCache ||
   (global._mongooseCache = { conn: null, promise: null });
 
-
 // * Options tuned for serverless functions and faster failure when DB unreachable.
- //* Adjust serverSelectionTimeoutMS to control how long to wait attempting to find a server.
- 
+//* Adjust serverSelectionTimeoutMS to control how long to wait attempting to find a server.
+
 const mongooseOptions = {
   // new URL parser and unified topology recommended
   useNewUrlParser: true,
@@ -72,4 +71,3 @@ async function connectDB() {
 }
 
 export default connectDB;
- */
