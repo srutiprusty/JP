@@ -9,7 +9,7 @@ import { USER_API_END_POINT, COMPANY_API_END_POINT } from "@/utils/constant";
 const Form = ({ role }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showResendVerification, setShowResendVerification] = useState(false);
+
   const { loading } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,7 +34,6 @@ const Form = ({ role }) => {
 
       if (!data.success) {
         if (data.message === "Please verify your email first") {
-          setShowResendVerification(true);
           toast.error(data.message);
           return;
         }
@@ -47,7 +46,7 @@ const Form = ({ role }) => {
       // Navigate based on role
       if (data.user.role === "student") {
         navigate("/jobseeker");
-      } else if (data.user.role === "recruiter") {
+      } else {
         // Check if user has a company
         try {
           const companyRes = await fetch(`${COMPANY_API_END_POINT}/get`, {
@@ -63,43 +62,9 @@ const Form = ({ role }) => {
         } catch (error) {
           navigate("/admin/companies/create");
         }
-      } else {
-        navigate("/mentorProfile");
       }
     } catch (error) {
       toast.error(error.message || "Login failed");
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
-
-  const handleResendVerification = async () => {
-    if (!email) {
-      toast.error("Please enter your email");
-      return;
-    }
-
-    try {
-      dispatch(setLoading(true));
-      const response = await fetch(
-        `${USER_API_END_POINT}/resend-verification`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
-          credentials: "include",
-        }
-      );
-
-      const data = await response.json();
-      if (data.success) {
-        toast.success("Verification email sent! Please check your inbox.");
-        setShowResendVerification(false);
-      } else {
-        throw new Error(data.message);
-      }
-    } catch (error) {
-      toast.error(error.message || "Failed to resend verification email");
     } finally {
       dispatch(setLoading(false));
     }
@@ -160,22 +125,12 @@ const Form = ({ role }) => {
             <input type="checkbox" />
             <label>Remember me</label>
           </div>
-          <span className="span">Forgot password?</span>
-        </div>
-
-        {showResendVerification && (
-          <div className="verification-message">
-            <p>Your email is not verified.</p>
-            <button
-              type="button"
-              onClick={handleResendVerification}
-              className="resend-button"
-              disabled={loading}
-            >
-              Resend Verification Email
-            </button>
+          <div>
+            <NavLink to="/forgot-password" className="forgot-password-link">
+              Forgot Password?
+            </NavLink>
           </div>
-        )}
+        </div>
 
         <button type="submit" className="button-submit" disabled={loading}>
           {loading ? (

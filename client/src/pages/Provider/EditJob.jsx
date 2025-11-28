@@ -2,6 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { JOB_API_END_POINT } from "@/utils/constant";
@@ -16,11 +23,15 @@ const EditJob = () => {
     title: "",
     description: "",
     requirements: "",
-    salary: "",
+    salaryMin: "",
+    salaryMax: "",
+    salaryCurrency: "INR",
     location: "",
+    workMode: "",
     jobType: "",
-    sector: "",
-    experience: "",
+    duration: "",
+    experienceLevel: "",
+    jobLevel: "",
     position: 0,
     companyId: "",
   });
@@ -45,11 +56,15 @@ const EditJob = () => {
             title: job.title || "",
             description: job.description || "",
             requirements: job.requirements ? job.requirements.join(",") : "",
-            salary: job.salary || "",
+            salaryMin: job.salaryMin || "",
+            salaryMax: job.salaryMax || "",
+            salaryCurrency: job.salaryCurrency || "INR",
             location: job.location || "",
+            workMode: job.workMode || "",
             jobType: job.jobType || "",
-            sector: job.sector || "",
-            experience: job.experienceLevel || "",
+            duration: job.duration || "",
+            experienceLevel: job.experienceLevel || "",
+            jobLevel: job.jobLevel || "",
             position: job.position || 0,
             companyId: job.company ? job.company._id : "",
           });
@@ -75,6 +90,10 @@ const EditJob = () => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
+  const selectChangeHandler = (name, value) => {
+    setInput({ ...input, [name]: value });
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
     // Add validation
@@ -82,11 +101,14 @@ const EditJob = () => {
       !input.title ||
       !input.description ||
       !input.requirements ||
-      !input.salary ||
+      !input.salaryMin ||
+      !input.salaryMax ||
       !input.location ||
+      !input.workMode ||
       !input.jobType ||
-      !input.sector ||
-      !input.experience ||
+      !input.duration ||
+      !input.experienceLevel ||
+      !input.jobLevel ||
       !input.position ||
       !input.companyId
     ) {
@@ -166,21 +188,31 @@ const EditJob = () => {
               />
             </div>
             <div>
-              <Label>Salary</Label>
+              <Label>Salary Min</Label>
               <Input
-                type="text"
-                name="salary"
-                value={input.salary}
+                type="number"
+                name="salaryMin"
+                value={input.salaryMin}
                 onChange={changeEventHandler}
                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
               />
             </div>
             <div>
-              <Label>Sector</Label>
+              <Label>Salary Max</Label>
+              <Input
+                type="number"
+                name="salaryMax"
+                value={input.salaryMax}
+                onChange={changeEventHandler}
+                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+              />
+            </div>
+            <div>
+              <Label>Salary Currency</Label>
               <Input
                 type="text"
-                name="sector"
-                value={input.sector}
+                name="salaryCurrency"
+                value={input.salaryCurrency}
                 onChange={changeEventHandler}
                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
               />
@@ -196,6 +228,24 @@ const EditJob = () => {
               />
             </div>
             <div>
+              <Label>Work Mode</Label>
+              <Select
+                value={input.workMode}
+                onValueChange={(value) =>
+                  selectChangeHandler("workMode", value)
+                }
+              >
+                <SelectTrigger className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1">
+                  <SelectValue placeholder="Select work mode" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Onsite">Onsite</SelectItem>
+                  <SelectItem value="Remote">Remote</SelectItem>
+                  <SelectItem value="Hybrid">Hybrid</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
               <Label>Job Type</Label>
               <Input
                 type="text"
@@ -206,14 +256,45 @@ const EditJob = () => {
               />
             </div>
             <div>
-              <Label>Experience Level</Label>
+              <Label>Duration</Label>
               <Input
-                type="number"
-                name="experience"
-                value={input.experience}
+                type="text"
+                name="duration"
+                value={input.duration}
                 onChange={changeEventHandler}
                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
               />
+            </div>
+            <div>
+              <Label>Experience Level</Label>
+              <Input
+                type="text"
+                name="experienceLevel"
+                value={input.experienceLevel}
+                onChange={changeEventHandler}
+                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+              />
+            </div>
+            <div>
+              <Label>Job Level</Label>
+              <Select
+                value={input.jobLevel}
+                onValueChange={(value) =>
+                  selectChangeHandler("jobLevel", value)
+                }
+              >
+                <SelectTrigger className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1">
+                  <SelectValue placeholder="Select job level" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Intern">Intern</SelectItem>
+                  <SelectItem value="Fresher">Fresher</SelectItem>
+                  <SelectItem value="Junior">Junior</SelectItem>
+                  <SelectItem value="Mid">Mid</SelectItem>
+                  <SelectItem value="Senior">Senior</SelectItem>
+                  <SelectItem value="Lead">Lead</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div>
               <Label>No of Position</Label>

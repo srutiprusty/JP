@@ -7,7 +7,16 @@ const EmailVerification = () => {
   const [verificationStatus, setVerificationStatus] = useState("verifying");
   const { token } = useParams();
   const [error, setError] = useState(null);
+  const [userRole, setUserRole] = useState(null);
   const navigate = useNavigate();
+
+  // Helper function to get login path based on role
+  const getLoginPath = (role) => {
+    if (role === "student") return "/stdlogin";
+    if (role === "recruiter") return "/emplogin";
+    if (role === "mentor") return "/mentorlogin";
+    return "/login"; // default
+  };
 
   useEffect(() => {
     const verifyEmail = async () => {
@@ -18,14 +27,18 @@ const EmailVerification = () => {
         );
         if (response.data.success) {
           setVerificationStatus("success");
-          // Redirect to login after 3 seconds
+          const role = response.data.user?.role;
+          setUserRole(role);
+          // Redirect to role-specific login page after 3 seconds
           setTimeout(() => {
-            navigate("/login");
+            navigate(getLoginPath(role));
           }, 3000);
+        } else {
+          setVerificationStatus("error");
         }
       } catch (error) {
         // console.error("Verification error:", error.response || error); // Debug log
-        setError(error.response?.data?.message || "Verification failed");
+        setError(error.response?.data?.message);
         setVerificationStatus("error");
         //  console.log(error);
       }
@@ -58,12 +71,11 @@ const EmailVerification = () => {
 
         {verificationStatus === "error" && (
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-red-600">
-              Verification Failed
-            </h2>
-            <p className="mt-2">The verification link is ...</p>
+            <p className="mt-2">
+              {error || "The verification link is invalid or expired."}
+            </p>
             <button
-              onClick={() => navigate("/login")}
+              onClick={() => navigate(getLoginPath(userRole))}
               className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
             >
               Go to Login

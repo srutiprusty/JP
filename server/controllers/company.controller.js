@@ -3,8 +3,9 @@ import cloudinary from "cloudinary";
 import getDataUri from "../utils/dataUri.js";
 export const registerCompany = async (req, res) => {
   try {
-    const { companyName, description, website, location, logo, employeeCount } =
+    const { companyName, description, website, location, employeeCount } =
       req.body;
+    const file = req.file;
     if (!companyName) {
       return res.status(400).json({
         message: "Company name is required.",
@@ -26,13 +27,21 @@ export const registerCompany = async (req, res) => {
         success: false,
       });
     }
-    company = await Company.create({
+    // Cloudinary
+    const updateData = {
       name: companyName,
       description,
       website,
       location,
-      logo,
       employeeCount,
+    };
+    if (file) {
+      const fileUri = getDataUri(file);
+      const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+      updateData.logo = cloudResponse.secure_url;
+    }
+    company = await Company.create({
+      ...updateData,
       userId: req.id,
     });
     return res.status(201).json({

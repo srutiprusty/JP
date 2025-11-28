@@ -9,9 +9,6 @@ import StdLog from "./pages/Std-Login/StdLog";
 import Landing from "./components/Landing/Landing";
 import SignUp from "./components/SignUp/SignUp";
 import SeekHm from "./pages/JobSeeker/SeekerHome/SeekHm";
-import Mentorship from "./pages/Mentorship/Mentorship";
-import MentorLogin from "./pages/Mentorship/MentorLogin";
-
 import JobPg from "./pages/JobSeeker/JobPg/JobPg";
 import Jobs from "./components/Jobs/Jobs";
 import Profile from "./components/Profile";
@@ -34,9 +31,9 @@ import Roadmap from "./pages/JobSeeker/resources/Roadmap";
 import FrontedRoadmap from "./pages/JobSeeker/resources/FrontendRoadmap";
 import ExamSection from "./pages/JobSeeker/resources/ExamSection";
 import EmailVerification from "./components/SignUp/EmailVerification";
-import CandidateRecommend from "./components/Recommendations/CandidateRecommend";
-import JobRecommend from "./components/Recommendations/JobRecommend";
-import MentorProfile from "./pages/Mentorship/MentorProfile";
+import ForgotPassword from "./components/Login/ForgotPassword";
+import ResetPassword from "./components/Login/ResetPassword";
+
 function App() {
   return (
     <BrowserRouter>
@@ -49,10 +46,7 @@ function App() {
         <Route path="/register" element={<SignUp />} />
         <Route path="/emplogin" element={<EmpLog />} />
         <Route path="/stdlogin" element={<StdLog />} />
-        <Route path="/mentorlogin" element={<MentorLogin />} />
         <Route path="/jobseeker" element={<SeekHm />} />
-        <Route path="/mentorship" element={<Mentorship />} />
-        <Route path="/mentorProfile" element={<MentorProfile />} />
         <Route path="/jobpg" element={<JobPg />} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/jobs/:id" element={<JobDescription />} />
@@ -65,6 +59,8 @@ function App() {
         <Route path="/roadmaps" element={<Roadmap />} />
         <Route path="/frontend" element={<FrontedRoadmap />} />
         <Route path="/verify/:token" element={<EmailVerification />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
         {/* provider */}
         <Route
           path="/admin/companies"
@@ -130,11 +126,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/recommendations/:id" element={<CandidateRecommend />} />
-        {/* <Route path="/recommendations/:id" element={<JobRecommend />} /> */}
-        {/*         <Route path="/recommendations/:id" element={<CandidateRecommend />} />
-         */}{" "}
-        {/* </Route> */}
       </Routes>
     </BrowserRouter>
   );

@@ -12,15 +12,55 @@ const Jobs = () => {
   const jobsPerPage = 10;
 
   useEffect(() => {
-    if (searchedQuery) {
+    if (searchedQuery && Object.keys(searchedQuery).length > 0) {
       const filteredJobs = allJobs.filter((job) => {
-        return (
-          job?.title?.toLowerCase().includes(searchedQuery.toLowerCase()) ||
-          job?.description
-            ?.toLowerCase()
-            .includes(searchedQuery.toLowerCase()) ||
-          job?.location?.toLowerCase().includes(searchedQuery.toLowerCase())
-        );
+        return Object.keys(searchedQuery).every((filterType) => {
+          const selectedValues = searchedQuery[filterType];
+          if (!selectedValues || selectedValues.length === 0) return true;
+
+          switch (filterType) {
+            case "Job Type":
+              return selectedValues.some((value) =>
+                job?.jobType?.toLowerCase().includes(value.toLowerCase())
+              );
+            case "Location":
+              return selectedValues.some((value) =>
+                job?.location?.toLowerCase().includes(value.toLowerCase())
+              );
+            case "Title":
+              return selectedValues.some((value) =>
+                job?.title?.toLowerCase().includes(value.toLowerCase())
+              );
+            case "Work Mode":
+              return selectedValues.some((value) =>
+                job?.workMode?.toLowerCase().includes(value.toLowerCase())
+              );
+            case "Job Level":
+              return selectedValues.some((value) =>
+                job?.jobLevel?.toLowerCase().includes(value.toLowerCase())
+              );
+            case "Duration":
+              return selectedValues.some((value) =>
+                job?.duration?.toLowerCase().includes(value.toLowerCase())
+              );
+            case "Salary":
+              return selectedValues.some((value) => {
+                const [min, max] = value
+                  .replace(/[^\d-]/g, "")
+                  .split("-")
+                  .map((v) => parseInt(v));
+                return job?.salaryMin >= min && job?.salaryMax <= max;
+              });
+            case "Experience Level":
+              return selectedValues.some((value) =>
+                job?.experienceLevel
+                  ?.toLowerCase()
+                  .includes(value.toLowerCase())
+              );
+            default:
+              return true;
+          }
+        });
       });
       setFilterJobs(filteredJobs);
     } else {

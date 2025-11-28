@@ -7,7 +7,7 @@ import { APPLICATION_API_END_POINT, JOB_API_END_POINT } from "@/utils/constant";
 import { setSingleJob } from "@/redux/jobSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
-import JobRecommend from "./Recommendations/JobRecommend";
+
 import JobHeader from "./JobHeader/JobHeader";
 
 const JobDescription = () => {
@@ -75,13 +75,16 @@ const JobDescription = () => {
             <h1 className="font-bold text-xl">{singleJob?.title}</h1>
             <div className="flex items-center gap-2 mt-4">
               <Badge className={"text-blue-700 font-bold"} variant="ghost">
-                {singleJob?.postion} Positions
+                {singleJob?.position} Positions
               </Badge>
               <Badge className={"text-[#F83002] font-bold"} variant="ghost">
                 {singleJob?.jobType}
               </Badge>
               <Badge className={"text-[#7209b7] font-bold"} variant="ghost">
-                {singleJob?.salary}PA
+                {singleJob?.workMode}
+              </Badge>
+              <Badge className={"text-green-700 font-bold"} variant="ghost">
+                {singleJob?.jobLevel}
               </Badge>
             </div>
           </div>
@@ -110,7 +113,7 @@ const JobDescription = () => {
           <h1 className="font-bold my-1">
             Location:{" "}
             <span className="pl-4 font-normal text-gray-800">
-              {singleJob?.location}
+              {singleJob?.location || "Work from home"}
             </span>
           </h1>
           <h1 className="font-bold my-1">
@@ -120,17 +123,83 @@ const JobDescription = () => {
             </span>
           </h1>
           <h1 className="font-bold my-1">
-            Experience:{" "}
+            Requirements:{" "}
             <span className="pl-4 font-normal text-gray-800">
-              {singleJob?.experience} yrs
+              {singleJob?.requirements?.join(", ")}
             </span>
           </h1>
           <h1 className="font-bold my-1">
             Salary:{" "}
             <span className="pl-4 font-normal text-gray-800">
-              {singleJob?.salary}PA
+              {singleJob?.salaryMin} - {singleJob?.salaryMax}{" "}
+              {singleJob?.salaryCurrency}
             </span>
           </h1>
+          <h1 className="font-bold my-1">
+            Experience Level:{" "}
+            <span className="pl-4 font-normal text-gray-800">
+              {singleJob?.experienceLevel}
+            </span>
+          </h1>
+          <h1 className="font-bold my-1">
+            Duration:{" "}
+            <span className="pl-4 font-normal text-gray-800">
+              {singleJob?.duration}
+            </span>
+          </h1>
+          <h1 className="font-bold my-1">
+            Company:{" "}
+            <span className="pl-4 font-normal text-gray-800">
+              {singleJob?.company?.name || "N/A"}
+            </span>
+          </h1>
+          {singleJob?.company && (
+            <>
+              <h1 className="font-bold my-1">
+                Company Location:{" "}
+                <span className="pl-4 font-normal text-gray-800">
+                  {singleJob?.company?.location || "N/A"}
+                </span>
+              </h1>
+              <h1 className="font-bold my-1">
+                Company Description:{" "}
+                <span className="pl-4 font-normal text-gray-800">
+                  {singleJob?.company?.description || "N/A"}
+                </span>
+              </h1>
+              <h1 className="font-bold my-1">
+                Company Website:{" "}
+                <span className="pl-4 font-normal text-gray-800">
+                  {singleJob?.company?.website ? (
+                    <a
+                      href={singleJob.company.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 underline"
+                    >
+                      {singleJob.company.website}
+                    </a>
+                  ) : (
+                    "N/A"
+                  )}
+                </span>
+              </h1>
+              <h1 className="font-bold my-1">
+                Employee Count:{" "}
+                <span className="pl-4 font-normal text-gray-800">
+                  {singleJob?.company?.employeeCount || "N/A"}
+                </span>
+              </h1>
+              <h1 className="font-bold my-1">
+                Company Rating:{" "}
+                <span className="pl-4 font-normal text-gray-800">
+                  {singleJob?.company?.ratings
+                    ? `${singleJob.company.ratings}/5`
+                    : "N/A"}
+                </span>
+              </h1>
+            </>
+          )}
           <h1 className="font-bold my-1">
             Total Applicants:{" "}
             <span className="pl-4 font-normal text-gray-800">
@@ -140,13 +209,12 @@ const JobDescription = () => {
           <h1 className="font-bold my-1">
             Posted Date:{" "}
             <span className="pl-4 font-normal text-gray-800">
-              {singleJob?.createdAt.split("T")[0]}
+              {singleJob?.createdAt
+                ? new Date(singleJob.createdAt).toLocaleDateString()
+                : "N/A"}
             </span>
           </h1>
         </div>
-        <h2>Recommendations</h2>
-        {/* Show candidate recommendations if jobId is available */}
-        {params.id && <JobRecommend jobId={params.id} />}
       </div>
     </div>
   );

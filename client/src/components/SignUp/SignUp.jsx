@@ -40,10 +40,8 @@ const SignUp = () => {
         toast.success(result.message);
         if (role === "student") {
           navigate("/stdlogin");
-        } else if (role === "recruiter") {
-          navigate("/emplogin");
         } else {
-          navigate("/mentorlogin");
+          navigate("/emplogin");
         }
       } else {
         toast.error(result.message);
@@ -94,7 +92,6 @@ const SignUp = () => {
             <option value="">Select User Type</option>
             <option value="student">Student</option>
             <option value="recruiter">Employer</option>
-            <option value="mentor">Mentor</option>
           </select>
           <span className="sub">
             Already have an account? <NavLink to="/login">Sign in</NavLink>

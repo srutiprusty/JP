@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setAllApplicants } from "@/redux/applicationSlice";
 import JobHeader from "@/components/JobHeader/JobHeader";
-import CandidateRecommend from "@/components/Recommendations/CandidateRecommend";
 
 const Applicants = () => {
   const params = useParams();
@@ -43,8 +42,8 @@ const Applicants = () => {
     <div>
       <JobHeader />
       <div className="max-w-7xl mx-auto">
-        <h1 className="font-bold text-xl my-5">
-          Applicants {applicants?.applications?.length}
+        <h1 className="font-bold text-xl my-5 ">
+          Applicants : {applicants?.applications?.length}
         </h1>
 
         {/* Loading or error state handling */}
@@ -61,10 +60,6 @@ const Applicants = () => {
 
         {/* Render ApplicantsTable only if applicants data is available */}
         {!loading && !error && <ApplicantsTable />}
-
-        <h2>Recommendations</h2>
-        {/* Show candidate recommendations if jobId is available */}
-        {params.id && <CandidateRecommend jobId={params.id} />}
       </div>
     </div>
   );

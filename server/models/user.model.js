@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["student", "recruiter", "mentor"],
+      enum: ["student", "recruiter"],
       required: true,
     },
     profile: {
@@ -40,6 +40,12 @@ const userSchema = new mongoose.Schema(
     },
     verificationToken: {
       type: String,
+    },
+    resetPasswordToken: {
+      type: String,
+    },
+    resetPasswordExpires: {
+      type: Date,
     },
   },
   { timestamps: true }

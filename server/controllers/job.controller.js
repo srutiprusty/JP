@@ -7,11 +7,15 @@ export const postJob = async (req, res) => {
       title,
       description,
       requirements,
-      salary,
+      salaryMin,
+      salaryMax,
+      salaryCurrency,
       location,
+      workMode,
       jobType,
-      sector,
-      experience,
+      duration,
+      experienceLevel,
+      jobLevel,
       position,
       companyId,
     } = req.body;
@@ -21,11 +25,13 @@ export const postJob = async (req, res) => {
       !title ||
       !description ||
       !requirements ||
-      !salary ||
-      !location ||
+      !salaryMin ||
+      !salaryMax ||
+      !workMode ||
       !jobType ||
-      !sector ||
-      !experience ||
+      !duration ||
+      !experienceLevel ||
+      !jobLevel ||
       !position
     ) {
       return res.status(400).json({
@@ -37,11 +43,15 @@ export const postJob = async (req, res) => {
       title,
       description,
       requirements: requirements.split(","),
-      salary: Number(salary),
+      salaryMin: Number(salaryMin),
+      salaryMax: Number(salaryMax),
+      salaryCurrency: salaryCurrency || "INR",
       location,
+      workMode,
       jobType,
-      sector,
-      experienceLevel: experience,
+      duration,
+      experienceLevel,
+      jobLevel,
       position,
       company: companyId,
       created_by: userId,
@@ -91,10 +101,13 @@ export const getAllJobs = async (req, res) => {
 export const getJobById = async (req, res) => {
   try {
     const jobId = req.params.id;
-    const job = await Job.findById(jobId).populate({
-      //this populate is for updated path or satte of applicationa
-      path: "applications",
-    });
+    const job = await Job.findById(jobId)
+      .populate({
+        path: "applications",
+      })
+      .populate({
+        path: "company",
+      });
     if (!job) {
       res.status(404).json({
         message: "Job not found",
@@ -139,11 +152,15 @@ export const updateJob = async (req, res) => {
       title,
       description,
       requirements,
-      salary,
+      salaryMin,
+      salaryMax,
+      salaryCurrency,
       location,
+      workMode,
       jobType,
-      sector,
-      experience,
+      duration,
+      experienceLevel,
+      jobLevel,
       position,
       companyId,
     } = req.body;
@@ -154,11 +171,14 @@ export const updateJob = async (req, res) => {
       !title ||
       !description ||
       !requirements ||
-      !salary ||
+      !salaryMin ||
+      !salaryMax ||
       !location ||
+      !workMode ||
       !jobType ||
-      !sector ||
-      !experience ||
+      !duration ||
+      !experienceLevel ||
+      !jobLevel ||
       !position
     ) {
       return res.status(400).json({
@@ -188,11 +208,15 @@ export const updateJob = async (req, res) => {
         title,
         description,
         requirements: requirements.split(","),
-        salary: Number(salary),
+        salaryMin: Number(salaryMin),
+        salaryMax: Number(salaryMax),
+        salaryCurrency: salaryCurrency || "INR",
         location,
+        workMode,
         jobType,
-        sector,
-        experienceLevel: experience,
+        duration,
+        experienceLevel,
+        jobLevel,
         position,
         company: companyId,
       },

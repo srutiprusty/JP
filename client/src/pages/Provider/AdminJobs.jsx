@@ -7,7 +7,6 @@ import AdminJobsTable from "./AdminJobsTable";
 import useGetAllAdminJobs from "@/hooks/useGetAllAdminJobs";
 import { setSearchJobByText } from "@/redux/jobSlice";
 import JobHeader from "@/components/JobHeader/JobHeader";
-import CandidateRecommend from "@/components/Recommendations/CandidateRecommend";
 
 const AdminJobs = () => {
   const { id } = useParams(); // Get jobId from URL parameters
@@ -50,11 +49,6 @@ const AdminJobs = () => {
 
         {/* Render jobs table only when loading is false and error is not present */}
         {!loading && !error && <AdminJobsTable />}
-
-        {/* Recommendations Section */}
-        <h2>Recommendations</h2>
-        {/* Pass jobId (id from URL) to CandidateRecommend */}
-        {id && <CandidateRecommend jobId={id} />}
       </div>
     </div>
   );

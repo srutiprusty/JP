@@ -102,11 +102,11 @@ const CompanyPage = () => {
           <div>
             <strong>Employee Count:</strong> {company.employeeCount || "N/A"}
           </div>
-          <div>
+          {/*  <div>
             <strong>Ratings:</strong> {company.ratings || "N/A"}
-          </div>
+          </div> */}
         </div>
-        <div className="mt-4">
+        {/* <div className="mt-4">
           <strong>Feedbacks:</strong>
           {company.feedbacks && company.feedbacks.length > 0 ? (
             <ul>
@@ -117,7 +117,7 @@ const CompanyPage = () => {
           ) : (
             "N/A"
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );

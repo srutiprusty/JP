@@ -16,17 +16,32 @@ const CompanyCreate = () => {
   const [description, setDescription] = useState("");
   const [website, setWebsite] = useState("");
   const [location, setLocation] = useState("");
-  const [logo, setLogo] = useState("");
+  const [logo, setLogo] = useState(null);
   const [employeeCount, setEmployeeCount] = useState("");
   const dispatch = useDispatch();
+
+  const fileChangeHandler = (e) => {
+    const file = e.target.files?.[0];
+    setLogo(file);
+  };
+
   const registerNewCompany = async () => {
     try {
+      const formData = new FormData();
+      formData.append("companyName", companyName);
+      formData.append("description", description);
+      formData.append("website", website);
+      formData.append("location", location);
+      formData.append("employeeCount", employeeCount);
+      if (logo) {
+        formData.append("file", logo);
+      }
       const res = await axios.post(
         `${COMPANY_API_END_POINT}/register`,
-        { companyName, description, website, location, logo, employeeCount },
+        formData,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
           },
           withCredentials: true,
         }
@@ -39,6 +54,7 @@ const CompanyCreate = () => {
       }
     } catch (error) {
       console.log(error);
+      toast.error(error.response?.data?.message || "Failed to create company");
     }
   };
   return (
@@ -94,13 +110,12 @@ const CompanyCreate = () => {
             />
           </div>
           <div>
-            <Label>Logo URL</Label>
+            <Label>Upload Logo</Label>
             <Input
-              type="url"
+              type="file"
+              accept="image/*"
+              onChange={fileChangeHandler}
               className="my-2"
-              placeholder="https://example.com/logo.png"
-              value={logo}
-              onChange={(e) => setLogo(e.target.value)}
             />
           </div>
           <div>

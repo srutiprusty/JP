@@ -68,10 +68,11 @@ const AdminJobsTable = () => {
         <TableHeader>
           <TableRow>
             <TableHead>Job Title</TableHead>
-            <TableHead>Location</TableHead>
+            <TableHead>WorkMode</TableHead>
             <TableHead>Job Type</TableHead>
             <TableHead>Salary</TableHead>
             <TableHead>Experience</TableHead>
+            <TableHead>Positions</TableHead>
             <TableHead>Posted Date</TableHead>
             <TableHead className="text-right">Action</TableHead>
           </TableRow>
@@ -80,7 +81,7 @@ const AdminJobsTable = () => {
           {/* Handle case where no jobs are found */}
           {filteredJobs.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={7} className="text-center">
+              <TableCell colSpan={8} className="text-center">
                 No jobs found
               </TableCell>
             </TableRow>
@@ -89,14 +90,21 @@ const AdminJobsTable = () => {
             filteredJobs.map((job) => (
               <TableRow key={job._id}>
                 <TableCell>{job?.title || "N/A"}</TableCell>
-                <TableCell>{job?.location || "N/A"}</TableCell>
+                <TableCell>{job?.workMode || "N/A"}</TableCell>
                 <TableCell>{job?.jobType || "N/A"}</TableCell>
-                <TableCell>{job?.salary ? `₹${job.salary}` : "N/A"}</TableCell>
                 <TableCell>
-                  {job?.experienceLevel
-                    ? `${job.experienceLevel} years`
+                  {job?.salaryMin && job?.salaryMax
+                    ? `₹${job.salaryMin} - ₹${job.salaryMax}`
+                    : job?.salaryMin
+                    ? `₹${job.salaryMin}`
+                    : job?.salaryMax
+                    ? `₹${job.salaryMax}`
                     : "N/A"}
                 </TableCell>
+                <TableCell>
+                  {job?.experienceLevel ? `${job.experienceLevel}` : "N/A"}
+                </TableCell>
+                <TableCell>{job?.position || "N/A"}</TableCell>
                 <TableCell>{job?.createdAt?.split("T")[0] || "N/A"}</TableCell>
                 <TableCell className="text-right">
                   <Popover>
