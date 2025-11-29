@@ -58,7 +58,7 @@ const CompanyPage = () => {
       <JobHeader />
       <div className="max-w-4xl mx-auto my-10">
         <div className="flex items-center justify-between mb-4">
-          <h1 className="font-bold text-2xl">{company.name}</h1>
+          <h1 className="font-bold text-2xl">{company.companyName}</h1>
           <Button onClick={() => navigate(`/admin/companies/${id}/edit`)}>
             Edit Company
           </Button>

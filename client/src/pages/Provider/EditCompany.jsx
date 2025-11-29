@@ -16,7 +16,7 @@ const EditCompany = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [input, setInput] = useState({
-    name: "",
+    companyName: "",
     description: "",
     website: "",
     location: "",
@@ -36,7 +36,7 @@ const EditCompany = () => {
         if (res.data.success) {
           const company = res.data.company;
           setInput({
-            name: company.name || "",
+            companyName: company.companyName || "",
             description: company.description || "",
             website: company.website || "",
             location: company.location || "",
@@ -66,14 +66,14 @@ const EditCompany = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     // Add validation
-    if (!input.name) {
+    if (!input.companyName.trim()) {
       toast.error("Company name is required");
       return;
     }
     try {
       setLoading(true);
       const formData = new FormData();
-      formData.append("name", input.name);
+      formData.append("companyName", input.companyName);
       formData.append("description", input.description);
       formData.append("website", input.website);
       formData.append("location", input.location);
@@ -130,8 +130,8 @@ const EditCompany = () => {
             <Label>Company Name *</Label>
             <Input
               type="text"
-              name="name"
-              value={input.name}
+              name="companyName"
+              value={input.companyName}
               onChange={changeEventHandler}
               className="my-2"
               placeholder="JobHunt, Microsoft etc."

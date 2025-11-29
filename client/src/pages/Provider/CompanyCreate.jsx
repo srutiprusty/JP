@@ -26,6 +26,10 @@ const CompanyCreate = () => {
   };
 
   const registerNewCompany = async () => {
+    if (!companyName.trim()) {
+      toast.error("Company name is required");
+      return;
+    }
     try {
       const formData = new FormData();
       formData.append("companyName", companyName);

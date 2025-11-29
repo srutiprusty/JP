@@ -1,19 +1,23 @@
 import { Company } from "../models/company.model.js";
-import cloudinary from "cloudinary";
+import cloudinary from "../utils/cloudinary.js";
 import getDataUri from "../utils/datauri.js";
 export const registerCompany = async (req, res) => {
   try {
+    //  console.log("Register company request:", req.body, "userId:", req.id);
     const { companyName, description, website, location, employeeCount } =
       req.body;
     const file = req.file;
     if (!companyName) {
+      //  console.log("Company name missing");
       return res.status(400).json({
         message: "Company name is required.",
         success: false,
       });
     }
-    let company = await Company.findOne({ name: companyName });
+    // Check for duplicate company by companyName (schema field is `companyName`)
+    let company = await Company.findOne({ companyName: companyName });
     if (company) {
+      //  console.log("Company name already exists:", companyName);
       return res.status(400).json({
         message: "you can't register in the same company.",
         success: false,
@@ -22,14 +26,15 @@ export const registerCompany = async (req, res) => {
     // Check if user already has a company
     const existingCompany = await Company.findOne({ userId: req.id });
     if (existingCompany) {
+      //  console.log("User already has a company:", existingCompany.companyName);
       return res.status(400).json({
         message: "You can only create one company.",
         success: false,
       });
     }
-    // Cloudinary
+    // Cloudinary / payload
     const updateData = {
-      name: companyName,
+      companyName: companyName,
       description,
       website,
       location,
@@ -50,7 +55,12 @@ export const registerCompany = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
+    // console.error("registerCompany error:", error);
+    return res.status(500).json({
+      message: "Server error while registering company",
+      success: false,
+      error: error.message,
+    });
   }
 };
 
@@ -69,7 +79,12 @@ export const getCompany = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
+    //  console.error("getCompany error:", error);
+    return res.status(500).json({
+      message: "Server error retrieving companies",
+      success: false,
+      error: error.message,
+    });
   }
 };
 
@@ -88,16 +103,29 @@ export const getCompanyById = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
+    console.error("getCompanyById error:", error);
+    return res.status(500).json({
+      message: "Server error retrieving company",
+      success: false,
+      error: error.message,
+    });
   }
 };
 
 export const updateCompany = async (req, res) => {
   try {
-    const { name, description, website, location, employeeCount } = req.body;
+    // keep API using `companyName` to match schema
+    const { companyName, description, website, location, employeeCount } =
+      req.body;
     const file = req.file;
     //cloudinary
-    const updateData = { name, description, website, location, employeeCount };
+    const updateData = {
+      companyName,
+      description,
+      website,
+      location,
+      employeeCount,
+    };
     if (file) {
       const fileUri = getDataUri(file);
       const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
@@ -119,6 +147,11 @@ export const updateCompany = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
+    console.error("updateCompany error:", error);
+    return res.status(500).json({
+      message: "Server error",
+      success: false,
+      error: error.message,
+    });
   }
 };
