@@ -4,20 +4,25 @@ import getDataUri from "../utils/datauri.js";
 export const registerCompany = async (req, res) => {
   try {
     //  console.log("Register company request:", req.body, "userId:", req.id);
-    const { companyName, description, website, location, employeeCount } =
-      req.body;
+    const {
+      companyName: name,
+      description,
+      website,
+      location,
+      employeeCount,
+    } = req.body;
     const file = req.file;
-    if (!companyName) {
+    if (!name) {
       //  console.log("Company name missing");
       return res.status(400).json({
         message: "Company name is required.",
         success: false,
       });
     }
-    // Check for duplicate company by companyName (schema field is `companyName`)
-    let company = await Company.findOne({ companyName: companyName });
+    // Check for duplicate company by name (schema field is `name`)
+    let company = await Company.findOne({ name: name });
     if (company) {
-      //  console.log("Company name already exists:", companyName);
+      //  console.log("Company name already exists:", name);
       return res.status(400).json({
         message: "you can't register in the same company.",
         success: false,
@@ -26,7 +31,7 @@ export const registerCompany = async (req, res) => {
     // Check if user already has a company
     const existingCompany = await Company.findOne({ userId: req.id });
     if (existingCompany) {
-      //  console.log("User already has a company:", existingCompany.companyName);
+      //  console.log("User already has a company:", existingCompany.name);
       return res.status(400).json({
         message: "You can only create one company.",
         success: false,
