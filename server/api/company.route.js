@@ -1,6 +1,6 @@
 import express from "express";
-import isAuthenticated from "./../middlewares/isAuthenticated.js";
-import { singleUpload } from "./../middlewares/multer.js";
+import isAuthenticated from "../middlewares/isAuthenticated.js";
+import { singleUpload } from "../middlewares/multer.js";
 import {
   getCompany,
   getCompanyById,

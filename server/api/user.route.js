@@ -7,9 +7,9 @@ import {
   forgotPassword,
   resetPassword,
 } from "../controllers/user.controller.js";
-import isAuthenticated from "./../middlewares/isAuthenticated.js";
+import isAuthenticated from "../middlewares/isAuthenticated.js";
 import { verifyEmail } from "../controllers/user.controller.js";
-import { singleUpload } from "./../middlewares/multer.js";
+import { singleUpload } from "../middlewares/multer.js";
 
 const router = express.Router();
 

@@ -1,6 +1,6 @@
 import { Company } from "./../models/company.model.js";
 import cloudinary from "cloudinary";
-import getDataUri from "../utils/dataUri.js";
+import getDataUri from "../utils/datauri.js";
 export const registerCompany = async (req, res) => {
   try {
     const { companyName, description, website, location, employeeCount } =

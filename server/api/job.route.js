@@ -1,6 +1,6 @@
 import express from "express";
 
-import isAuthenticated from "./";
+import isAuthenticated from "../middlewares/isAuthenticated.js";
 import {
   getAdminJobs,
   getAllJobs,
