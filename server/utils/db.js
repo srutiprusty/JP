@@ -42,9 +42,8 @@ const mongooseOptions = {
   // family: 4, // force IPv4 (helpful in some environments)
 };
 
-// Disable mongoose buffering of model operations when disconnected.
-// This makes operations fail immediately rather than silently buffering.
-mongoose.set("bufferCommands", false);
+// Enable mongoose buffering of model operations when disconnected for serverless.
+mongoose.set("bufferCommands", true);
 
 async function connectDB() {
   if (cached.conn) {

@@ -41,9 +41,14 @@ export const registerCompany = async (req, res) => {
       employeeCount,
     };
     if (file) {
-      const fileUri = getDataUri(file);
-      const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
-      updateData.logo = cloudResponse.secure_url;
+      try {
+        const fileUri = getDataUri(file);
+        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+        updateData.logo = cloudResponse.secure_url;
+      } catch (uploadError) {
+        console.error("Cloudinary upload failed:", uploadError);
+        // Continue without logo if upload fails
+      }
     }
     company = await Company.create({
       ...updateData,
@@ -127,9 +132,14 @@ export const updateCompany = async (req, res) => {
       employeeCount,
     };
     if (file) {
-      const fileUri = getDataUri(file);
-      const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
-      updateData.logo = cloudResponse.secure_url;
+      try {
+        const fileUri = getDataUri(file);
+        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+        updateData.logo = cloudResponse.secure_url;
+      } catch (uploadError) {
+        console.error("Cloudinary upload failed:", uploadError);
+        // Continue without logo if upload fails
+      }
     }
     const company = await Company.findByIdAndUpdate(req.params.id, updateData, {
       new: true,
