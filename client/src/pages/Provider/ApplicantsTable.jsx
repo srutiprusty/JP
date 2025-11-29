@@ -72,7 +72,7 @@ const ApplicantsTable = () => {
                     <div className="flex items-center space-x-3">
                       <div>
                         <div className="text-sm text-gray-500">
-                          {item?.applicant?.email}
+                          {item?.applicant?.fullName}
                         </div>
                       </div>
                     </div>
