@@ -39,8 +39,27 @@ app.use("/api/v1/company", companyRoute);
 app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationRoute);
 
-// Start server
-app.listen(PORT, () => {
-  connectDB(); // Database connection
-  console.log(`Server running at port ${PORT}`);
+// Start server only after DB connection — fail fast if DB cannot be reached
+const startServer = async () => {
+  try {
+    await connectDB(); // ensure DB connected before accepting requests
+    app.listen(PORT, () => {
+      console.log(`Server running at port ${PORT}`);
+    });
+  } catch (err) {
+    console.error("Failed to start server - DB connection error:", err);
+    // exit process so the host (or dev) can restart / investigate
+    process.exit(1);
+  }
+};
+
+startServer();
+
+// handle unhandled rejections/uncaught exceptions to improve robustness
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("Unhandled Rejection at:", promise, "reason:", reason);
+});
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught Exception thrown:", err);
+  process.exit(1);
 });
