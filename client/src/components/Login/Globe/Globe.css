@@ -25,19 +25,18 @@ canvas {
  */
 .globe-container {
   position: absolute;
-  /*   top: 60vh; */ /* Align with the bottom of the viewport */
-  /* right: 10vw; */ /* Align with the right side of the viewport */
-  width: 600px; /* Adjust width for better visibility */
-  height: 600px; /* Adjust height for better visibility */
-  /*   overflow: hidden;
- */
+
+  width: 600px;
+  height: 600px;
+
+  z-index: 1;
   object-fit: contain;
   z-index: 1000;
 }
 
 .globe canvas {
   width: 100%;
-  height: 100%; /* Fill the container */
+  height: 100%;
   border-radius: 50%;
   object-fit: contain;
 }

@@ -65,13 +65,7 @@ const JobHeader = () => {
         {user && user.role === "recruiter" ? (
           <>
             <li>
-              <NavLink
-                to={
-                  companies.length > 0
-                    ? `/admin/companies/${companies[0]._id}`
-                    : "/admin/companies"
-                }
-              >
+              <NavLink to={`/admin/companies/${companies[0]._id}`}>
                 Company
               </NavLink>
             </li>
@@ -85,9 +79,6 @@ const JobHeader = () => {
               <NavLink to="/jobpg">Jobs</NavLink>
             </li>
 
-            <li>
-              <NavLink to="/mentorship">Mentorship</NavLink>
-            </li>
             <li>
               <NavLink to="/resources">Resources</NavLink>
             </li>

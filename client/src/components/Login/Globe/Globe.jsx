@@ -37,7 +37,13 @@ const Globe = () => {
     return () => globe.destroy(); // Cleanup on unmount
   }, []);
 
-  return <canvas ref={canvasRef} style={{ width: "100%", height: "100%" }} />;
+  return (
+    <canvas
+      ref={canvasRef}
+      className="w-full h-full"
+      style={{ width: "100%", height: "100%" }}
+    />
+  );
 };
 
 export default Globe;

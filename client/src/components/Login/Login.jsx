@@ -69,15 +69,6 @@ const Login = () => {
           </div>
         </div>
 
-        {/* Skyline Image */}
-        <div className="footer">
-          <img
-            src="./images/build-image.png"
-            alt="Skyline"
-            className="build-img"
-          />
-        </div>
-
         {/* Right Gradient */}
         <div className="violet-gradient"></div>
       </div>

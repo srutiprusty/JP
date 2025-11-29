@@ -16,10 +16,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /*  margin-bottom: 28px; */
-  margin-top: 10%;
   z-index: 2;
-  padding: 20px;
 }
 
 .stdlog-container .sec {
@@ -35,12 +32,7 @@
   font-size: 35px;
   text-align: start;
   font-weight: 700;
-  margin-top: -30%;
   margin-left: 5%;
-}
-
-.stdlog-page > .stdlog-container > .sec > .globe-container {
-  left: 3%;
 }
 
 @media (max-width: 768px) {
@@ -52,6 +44,10 @@
   .stdlog-page {
     justify-content: flex-start;
     height: auto;
+  }
+
+  .stdlog-page > .stdlog-container > #studentsec {
+    margin-top: 20%;
   }
 }
 
