@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// CORS setup for frontend (adjust as necessary for production)
+// CORS setup for frontend
 const corsOptions = {
   origin: process.env.FRONTEND_URL || "http://localhost:5173",
   credentials: true,
@@ -25,6 +25,10 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 app.use(cors(corsOptions));
+
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to Job Portal API" });
+});
 
 const PORT = process.env.PORT || 4000;
 
