@@ -24,10 +24,6 @@
   outline: none;
 }
 
-.stdlog-page > .stdlog-container > .sec {
-  margin-left: 5%;
-}
-
 .stdlog-page > .stdlog-container > .sec > .head-sec {
   font-size: 35px;
   text-align: start;
@@ -38,7 +34,7 @@
 @media (max-width: 768px) {
   .stdlog-container {
     flex-direction: column;
-    margin-bottom: 20px;
+    /*  margin-bottom: 20px; */
   }
 
   .stdlog-page {

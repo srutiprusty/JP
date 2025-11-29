@@ -70,7 +70,7 @@ const Form = ({ role }) => {
   };
 
   return (
-    <div className="w-full flex justify-center items-center min-h-screen lg:px-4 md:mt-2">
+    <div className="w-full flex justify-center items-center min-h-screen lg:px-4">
       <form
         className="flex flex-col gap-2.5 border border-gray-200 shadow-md py-8 px-4 w-full max-w-md rounded-3xl z-10 transition-all duration-300 hover:shadow-xl hover:scale-[1.01]"
         onSubmit={handleLogin}
